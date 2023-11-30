@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>View Categories (Admin)</title>
+<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+<script src="/bootstrap/css/bootstrap.js"></script>
+<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+</head>
+	<div th:replace="fragments/headers"></div>
+<body>
+
+	<div class="container mt-4">
+	    <div th:replace="fragments/authenticated"></div>
+	    <div class="alert alert-primary" role="alert" th:text="${success}" th:if="${success}"></div>
+		<div class="h1">View Categories</div>
+		<table class="table bordered">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Category</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				<th:block th:each="category:${listCategory}">
+					<tr>
+						<td th:text="${category.id}"></td>
+						<td th:text="${category.name}"></td>
+						<td><a style="margin-right:2px; background-color:cadetblue; outline:none; border:none;" class="btn btn-primary" th:href="@{/categories/edit/{id}(id=${category.id})}"><i class='far fa-edit' style='font-size:16px'></i></a>
+							<a style="background-color:indianred; outline:none; border:none;" class="btn btn-primary" th:href="@{/categories/delete/{id}(id=${category.id})}"><i class='fa fa-trash-o' style='font-size:20px'></i></a>
+						</td>
+					</tr>
+				</th:block>
+			</tbody>
+		</table>
+		<a class="btn btn-primary" th:href="@{/categories/add}" role="button" style="background-color:peru; color:black; outline:none; border:none; font-weight:bold">Add Category</a>
+	</div>
+</body>
+	<div th:replace="fragments/footer"></div>
+</html>

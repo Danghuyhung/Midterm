@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>Edit Item (Admin)</title>
+<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+<script src="/bootstrap/css/bootstrap.js"></script>
+</head>
+	<div th:replace="fragments/headers"></div>
+<body>
+	<div class="text-align-center">
+	<div class="container col-5 mt-5">
+		<h1>Edit Item</h1>
+		<form th:action="@{/accessories/edit/{id}(id=${accessory.id})}" method="post" th:object="${accessory}" enctype="multipart/form-data">
+				<label for="item_name" class="form-label">Name: </label>
+				<input	id="item_name" type="text" class="form-control" th:field="*{name}" />
+				
+				<label for="item_des" class="form-label">Description: </label>
+				<input	id="item_des" type="text" class="form-control" th:field="*{description}" />
+				
+				<label for="item_quantity" class="form-label">Quantity: </label>
+				<input	id="item_quantity" type="text" class="form-control" th:field="*{quantity}" />
+				
+				<label for="item_price" class="form-label">Price: </label>
+				<input	id="item_price" type="text" class="form-control" th:field="*{price}" />
+				
+				<label for="item_material" class="form-label">Material: </label>
+				<input	id="item_material" type="text" class="form-control" th:field="*{material}" />
+				
+				<label for="item_cat" class="form-label">Category:</label> 
+				<select id="item_cat" class="form-control" th:field="*{category}">
+					<option value="">Choose one</option>
+					<option th:each="category: ${categoryList}" th:value="${category.id}" th:text="${category.name}"></option>
+				</select>
+				
+				<label for="item_image" class="form-label">Item Image:</label>
+				<input id="item_image" type="file" class="form-control" name="itemImage" accept="image/png, image/jpeg" required/>
+
+			<div class="mt-3 mb-5">
+				<button type="submit" class="btn btn-primary" style="background-color:peru; color:black; outline:none; border:none; font-weight:bold">Update Item</button>
+			</div>
+		</form>
+	</div>
+	</div>
+
+</body>
+	<div th:replace="fragments/footer"></div>
+</html>
+
+

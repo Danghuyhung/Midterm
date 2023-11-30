@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<title>View Members</title>
+<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+<script src="/bootstrap/css/bootstrap.js"></script>
+</head>
+	<div th:replace="fragments/headers"></div>
+<body>
+   	<div th:replace="fragments/authenticated"></div>
+	<div class="alert alert-primary" role="alert" th:text="${success}" th:if="${success}"></div>
+		<div class="h1 text-center">Account Details</div>
+		<div class="card mx-auto" style="width: 30%;">
+		
+		<div class="card" style="width:100%">
+			<img class="card-img-top" src="https://th.bing.com/th/id/R.73172a6bd46f8469d177cc77376a0176?rik=PvkNykQxKYU%2b4w&riu=http%3a%2f%2fwww.pngall.com%2fwp-content%2fuploads%2f5%2fUser-Profile-Transparent.png&ehk=W61jBYLe9trXiOWMqmdzJqC%2bFtjb42q6to9QJ2RSmO8%3d&risl=&pid=ImgRaw&r=0" style="width:100%">
+			<div class="card-body">
+			<div class="text-center">
+			    <h4 class="card-title">Username: <span th:text="${member.username}"></span></h4>
+			    <p class="card-text">Name: <span th:text="${member.name}"></span></p>
+				<p class="card-text">Email: <span th:text="${member.email}"></span></p>
+				<a th:href="@{/members/editByUser/{id} (id=${member.id})}" class="btn btn-primary" style="background-color:peru; color:black; outline:none; border:none; font-weight:bold">Edit Details</a>
+			</div>
+			</div>
+		</div>
+	</div>
+</body>
+		<div th:replace="fragments/footer"></div>
+</html>
+

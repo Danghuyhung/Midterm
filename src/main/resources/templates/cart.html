@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Shopping Cart</title>
+<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+<script src="/bootstrap/js/bootstrap.js"></script>
+<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+<script src="https://www.paypal.com/sdk/js?client-id=AT6aQ1_2uncTDEXChEo3Ojtaw7pvDW8Ld_G7LjuITOZj-2k7IBEcG9vWBUytcMlbUAbclYle7tiVTADz&currency=SGD&components=buttons"></script>
+</head>
+	<div th:replace="fragments/headers"></div>
+<body>
+	<div class="container">
+		<main>
+			<div class="container ">
+				<div class="row fs-1 text-center">
+					<p>SHOPPING CART</p>
+				    <div class="alert alert-primary" role="alert" th:text="${success}" th:if="${success}"></div>
+				</div>
+				<div class="row mb-5">
+				<!-- shopping cart -->
+					<div class="col-8">
+						<div class="container ">
+						<!-- shopping cart items header -->
+							<div class="row m-3 border-top border-bottom fs-5">
+								<div class="col-2">Product</div>								
+								<div class="col-3">Description</div>
+								<div class="col-2">PRICE</div>
+								<div class="col-3">QUANTITY</div>								
+								<div class="col-2">SUBTOTAL</div>
+							</div>
+						<!-- shopping cart rows -->
+							<div class="row m-3 border-bottom"
+								th:each="cartItem : ${cartItemList}">
+								<!-- Item name, description, image -->
+								<div class="col mb-3"> 
+									<h5 th:text="${cartItem.accessory.name}"></h5>
+									<img width="100px" th:src="@{/uploads/items/{id}/{imageName}(id=${cartItem.accessory.id}, imageName=${cartItem.accessory.imgName})}">
+								</div>
+								<div class="col-3 align-self-center" th:text="${cartItem.accessory.description}"></div>
+								<!-- Item quantity, price, links -->
+								<div class="col align-self-center" th:text="'$'+${cartItem.accessory.price}"></div>
+								<div class="col align-self-center">
+								
+								<!-- Update item quantity form -->
+									<form th:action="@{/cart/update/{id}(id=${cartItem.id})}" method="post">
+										<div class="col mb-3">
+											<input type="number" name="quantity" th:value="${cartItem.quantity}" th:id="${cartItem.id}" />  
+										</div>
+										<span><button style="margin-right:2px; background-color:cadetblue; outline:none; border:none;" class="btn btn-primary"><i class="far fa-edit" style="font-size:16px"></i></button>
+								<!-- Remove item link -->	
+										<a style="margin-right:4px; background-color:indianred; outline:none; border:none;" class="btn btn-primary" th:href="@{/cart/remove/{id}(id=${cartItem.id})}"><i class="far fa-trash-alt" style="font-size:20px;"></i></a>
+										</span>
+									</form>
+									<br>
+									
+								</div>
+								<div class="col align-self-center" th:text="'$'+${cartItem.subTotal}"></div>
+							</div>
+						</div>
+					</div>
+					<!-- Order summary -->
+					<div class="col-4">
+						<div class="container ">
+							<div class="row  m-3 border-top border-bottom fw-bold">
+								<div class="col text-center fs-3">ORDER SUMMARY</div>
+							</div>
+							<!-- Order summary rows -->
+							<div class="row m-3 border-bottom" th:each="cartItem: ${cartItemList}">
+								<div class="col fs-6">
+									<p th:text="${cartItem.accessory.name}+' x ' +${cartItem.quantity}"></p>
+								</div>
+								<div class="col fs-6 text-end">
+									<p th:text="'$'+${cartItem.subTotal}"></p>
+								</div>
+							</div>
+							
+							<!-- COMPLETE CODE HERE -->
+
+							<div class="row  m-3 border-bottom fw-bold">
+								<div class="col fs-6">
+									<p>TOTAL</p>
+								</div>
+								<div class="col fs-6 text-end">
+									<p id="cartTotal" th:text="'$'+${cartTotal}"></p>
+								</div>
+								<div>
+									<button onclick="handleCashPayment()" style="background-color:#7fff00; border-color:#ffefdb; color:white">Only payment on delivery</button>
+								</div>
+							</div>
+
+							<div class="fixed-bottom text-center"><span class="text-muted">Items will be removed if quantity value is 0 and below</span></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</main>
+	</div>
+</body>
+</html>
+

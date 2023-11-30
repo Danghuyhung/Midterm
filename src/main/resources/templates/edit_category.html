@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>Edit Category (Admin)</title>
+<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+<script src="/bootstrap/css/bootstrap.js"></script>
+</head>
+	<div th:replace="fragments/headers"></div>
+<body>
+	<div class="text-align-center">
+	<div class="container col-5 mt-5">
+		<h1>Edit Category</h1>
+		<form th:action="@{/categories/edit/{id}(id=${category.id})}" method="post" th:object="${category}">
+			<div class="mb-3 col-5">
+				<label for="category_name" class="form-label">Category: </label>
+				<input	id="category_name" type="text" class="form-control" th:field="*{name}" />
+			</div>
+			<div class="mt-3 mb-5">
+				<a class="btn btn-primary" type="submit" th:href="@{/categories/add}" role="button" style="background-color:peru; color:black; outline:none; border:none; font-weight:bold">Update Category</a>
+			</div>
+		</form>
+	</div>
+	</div>
+
+</body>
+</html>
+
+
