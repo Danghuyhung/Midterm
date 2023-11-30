@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>View Purchase History</title>
+<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+<script src="/bootstrap/css/bootstrap.js"></script>
+<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+</head>
+
+	<div th:replace="fragments/headers"></div>
+<body>
+	<div class="container mt-4">
+	       	<div th:replace="fragments/authenticated"></div>
+		<div class="h1">History of past purchases</div>
+		<table class="table bordered">
+			<thead>
+				<tr>
+					<th>Date Time</th>
+					<th>Transaction ID</th>
+					<th>Order ID</th>
+					<th></th>
+					<th>Name</th>
+					<th>Description</th>
+					<th>Quantity</th>
+					<th>Price</th>
+				</tr>
+			</thead>
+			<tbody>
+				<th:block th:each="purchase: ${itemPurchased}">
+					<tr>
+						<td th:text="${#dates.format(purchase.createdAt, 'dd/MM/yyyy HH:mm:ss')}"></td>
+						<td th:text="${purchase.transactionId}"></td>
+						<td th:text="${purchase.orderId}"></td>
+						<td><img width="100" th:src="@{/uploads/items/{id}/{imageName}(id=${purchase.accessory.id}, imageName=${purchase.accessory.imgName})}"></td>
+						<td th:text="${purchase.accessory.name}"></td>
+						<td th:text="${purchase.accessory.description}"></td>
+						<td th:text="${purchase.quantity}"></td>
+						<td th:text="${purchase.subTotal}"></td>
+					</tr>
+				</th:block>
+			</tbody>
+		</table>
+	</div>
+</body>
+	<div th:replace="fragments/footer"></div>
+</html>

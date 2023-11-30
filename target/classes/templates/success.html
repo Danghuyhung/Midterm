@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Success</title>
+<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+<script src="/bootstrap/js/bootstrap.js"></script>
+</head>
+		<div th:replace="fragments/headers"></div>
+<body>
+	<div class="container px-4 px-lg-5 mt-5 justify-content-center">
+		<div class="text-center">
+			<h1>Successful Payment! <i class='fas fa-hand-holding-usd' style='font-size:50px; color:green'></i></h1><br>
+			<br>
+			<h3>Radiant accessories are on their way :)</h3>
+			<p>Email invoice has been sent</p>
+			
+			<p>Transaction ID : <span th:text="${transactionId}"></span>  |  Order ID : <span th:text="${orderId}"></span></p>
+			<h5>Total Amount: $<span th:text="${cartTotal}"></span></h5>
+			<hr class="solid"><br>
+			<table class="table bordered">
+			<thead>
+				<tr>
+					<th></th>
+					<th>Name</th>
+					<th>Description</th>
+					<th class="col-2">Price per Unit</th>
+					<th>Quantity</th>
+					<th class="col-1">Sub Total</th>
+				</tr>
+			</thead>
+			<tbody>
+				<th:block th:each="item: ${cartItemList}">
+					<tr>
+						<td><img width="100" th:src="@{/uploads/items/{id}/{imageName}(id=${item.accessory.id}, imageName=${item.accessory.imgName})}"></td>
+						<td th:text="${item.accessory.name}"></td>
+						<td th:text="${item.accessory.description}"></td>
+						<td class="col-2" th:text="${item.accessory.price}"></td>
+						<td th:text="${item.quantity}"></td>
+						<td class="col-1" th:text="${item.subTotal}"></td>
+					</tr>
+				</th:block>
+			</tbody>
+		</table>
+			<br><br>
+			<a class="btn btn-primary" th:href="@{/}" role="button" style="background-color:peru; color:black; outline:none; border:none; font-weight:bold">Return to Home page</a>
+			<br>
+		</div>
+	</div>
+</body>
+		<div th:replace="fragments/footer"></div>
+
+</html>

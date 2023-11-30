@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title th:text="${accessory.name}"></title>
+<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+<script src="/bootstrap/css/bootstrap.js"></script>
+
+<style>
+	.picture{
+		margin-right:15px;
+		display:flex;
+		float: left;
+		width:40%
+	}
+	.text {
+	float: right;
+		width:60%
+	}
+</style>
+
+</head>
+		<div th:replace="fragments/headers"></div>
+<body>
+	<div class="container px-4 px-lg-5 mt-5" style="display:flex">
+		<div class="picture">
+			<img th:src="@{/uploads/items/{id}/{imageName}(id=${accessory.id}, imageName=${accessory.imgName})}" width="100%">
+		</div>
+	
+		<div class="text">
+			<div class="mb-4 ">
+				<h2 class="fw-bolder" th:text="${accessory.description}"></h2>
+				<p><span th:text="${accessory.sold}"></span> Sold</p>
+			</div>
+			<h1 style="background-color:peru; color:black; padding-left:20px"> $ <span th:text="${accessory.price}"></span></h1>
+			<div class="m-4">
+				<h5> Material: <span th:text="${accessory.material}"></span></h5>
+				<h5> Quantity Available: <span th:text="${accessory.quantity}"></span></h5>
+			</div>
+			<form th:action="@{/cart/add/{accessoryId}(accessoryId=${accessory.id})}" method="post">
+				<div class="m-4 col-3">
+					<input class="col-8" type="number" name="quantity" value="1"/>
+				</div>
+				<br>
+				<span><button type="submit" class="btn btn-primary" style="background-color:cadetblue; outline:none; border:none; font-weight:bold; margin-right: 25px"><i style="margin-right:10px" class="fas fa-cart-plus"></i>Add to cart</button>
+				<a sec:authorize="hasRole('ADMIN')" style="margin-right:2px; background-color:cadetblue; outline:none; border:none;" class="btn btn-primary" th:href="@{/accessories/edit/{id}(id=${accessory.id})}"><i class='far fa-edit' style='font-size:16px'></i></a></span>
+			</form>
+			<br>
+		</div>		
+	</div>
+	
+</body>
+	<div th:replace="fragments/footer"></div>
+</html>

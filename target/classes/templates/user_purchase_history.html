@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>View Purchase History</title>
+<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+<script src="/bootstrap/css/bootstrap.js"></script>
+<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+</head>
+
+	<div th:replace="fragments/headers"></div>
+<body>
+	<div class="container mt-4">
+	       	<div th:replace="fragments/authenticated"></div>
+	    <div class="h1"><span th:text="${member.username}"></span>'s Details</div>
+	    <table class="table bordered">
+			<thead>
+				<tr style="background-color:#633B00; color:white">
+					<th>ID</th>
+					<th>Name</th>
+					<th>Username</th>
+					<th>Email</th>
+					<th>Role</th>
+				</tr>
+			</thead>
+			<tbody>
+					<tr style="background-color:#A27C2B; color:white">
+						<td th:text="${member.id}"></td>
+						<td th:text="${member.name}"></td>
+						<td th:text="${member.username}"></td>
+						<td th:text="${member.email}"></td>
+						<td th:text="${member.role}"></td>
+					</tr>
+			</tbody>
+		</table>
+		
+		<div class="h1"><span th:text="${member.username}"></span>'s past purchase history</div>
+		<table class="table bordered">
+			<thead>
+				<tr>
+					<th>Date Time</th>
+					<th>Transaction ID</th>
+					<th>Order ID</th>
+					<th></th>
+					<th class="col-1">Item ID</th>
+					<th>Name</th>
+					<th>Description</th>
+					<th>Quantity</th>
+					<th>Price</th>
+				</tr>
+			</thead>
+			<tbody>
+				<th:block th:each="purchase: ${itemPurchased}">
+					<tr>
+						<td th:text="${#dates.format(purchase.createdAt, 'dd/MM/yyyy HH:mm:ss')}"></td>
+						
+						<td th:text="${purchase.transactionId}"></td>
+						<td th:text="${purchase.orderId}"></td>
+						<td><img width="100" th:src="@{/uploads/items/{id}/{imageName}(id=${purchase.accessory.id}, imageName=${purchase.accessory.imgName})}"></td>
+						<td class="col-1" th:text="${purchase.accessory.id}"></td>
+						<td th:text="${purchase.accessory.name}"></td>
+						<td th:text="${purchase.accessory.description}"></td>
+						<td th:text="${purchase.quantity}"></td>
+						<td th:text="${purchase.subTotal}"></td>
+					</tr>
+				</th:block>
+			</tbody>
+		</table>
+	</div>
+</body>
+	<div th:replace="fragments/footer"></div>
+</html>
